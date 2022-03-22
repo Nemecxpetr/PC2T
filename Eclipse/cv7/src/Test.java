@@ -169,6 +169,7 @@ public class Test {
 					System.out.println("Zadejte nazev studenta, ktereho chcete vymazat z databaze:");
 					name=sc.next();
 					mojeDatabaze.deleteStudent(name);
+					break;
 				case 10://exit program
 					run=false;
 					break;

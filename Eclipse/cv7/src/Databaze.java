@@ -63,7 +63,7 @@ public class Databaze{
 	}
 	
 	public Student[] getPrvkyDatabaze() {
-		return (Student[]) prvkyDatabaze.values().toArray();
+		return (Student[]) prvkyDatabaze.values().toArray(new Student[prvkyDatabaze.values().size()]);
 	}
 	
 	private Scanner sc;
@@ -146,7 +146,7 @@ public class Databaze{
 			prvkyDatabaze.put(out.get(i).getJmeno(), out.get(i));	
 		}
 		keys = prvkyDatabaze.keySet();
-		//prvkyDatabaze = out.toArray(new Student.out.size(]);
+		//prvkyDatabaze = out.toArray(new Student[out.lenght]);
 	}
 }
 	
