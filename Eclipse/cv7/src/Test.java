@@ -80,8 +80,6 @@ public class Test {
 						}						
 					catch(ArrayIndexOutOfBoundsException e) {
 						System.err.println("Nastala vyjimka typu "+e.toString());
-						System.err.println("V teto databazi neni misto pro dalsiho studenta! \n"+
-						"Je nutne vytvorit novou databazi.(");
 						sc.nextLine();
 					}					
 					break;
@@ -94,15 +92,11 @@ public class Test {
 					}
 					catch(InputMismatchException e){
 						System.err.println("Nastala vyjimka typu "+e.toString());
-						System.err.println("Overte, zda jsou zadane parametry spravne!\n"+
-								"Pozn.: ");
 						sc.nextLine();
 					}
 					catch(ArrayIndexOutOfBoundsException e) {
 						System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
-						System.err.println("V databazi neni student s pozadovanym indexem!");
-						System.err.println("Nejvyšší index v databazi je "+(mojeDatabaze.getPrvkyDatabaze().length-1));
-						System.err.println("Pozn.: Indexy zacinaji nulou, nikoliv jednickou.");
+						System.err.println("V databazi neni pozadovany student!");
 						sc.nextLine();
 					}
 					catch(NullPointerException e) {
@@ -130,17 +124,12 @@ public class Test {
 					}
 					catch(NullPointerException e) {
 						System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
-						System.err.println("Zadali jste neplatny index!");
 						System.err.println("Student na ktereho se snazite podivat zatim neexistuje, musite jej nejprve vytvorit");
-						System.err.println("Pozn.: Indexy zacinaji nulou, nikoliv jednickou.");
 						//pressEnterToContinue();
 						sc.nextLine();
 					}
 					catch(ArrayIndexOutOfBoundsException e) {
 						System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
-						System.err.println("Zadali jste neplatny index!");
-						System.err.println("Maximalni index je "+(mojeDatabaze.getPrvkyDatabaze().length-1));
-						System.err.println("Pozn.: Indexy zacinaji nulou, nikoliv jednickou.");
 						//pressEnterToContinue();
 						sc.nextLine();
 					}					
@@ -169,6 +158,7 @@ public class Test {
 					System.out.println("Zadejte nazev studenta, ktereho chcete vymazat z databaze:");
 					name=sc.next();
 					mojeDatabaze.deleteStudent(name);
+					break;
 				case 10://exit program
 					run=false;
 					break;

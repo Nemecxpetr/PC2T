@@ -2,11 +2,16 @@ import java.io.*;
 import java.util.*;
 
 public class Databaze{
+	//variables:
+	private Scanner sc;
+	Map <String, Student> prvkyDatabaze;
+	Set<String> keys;
 	
 	public Databaze(int pocetPrvku)
 	{
 		prvkyDatabaze=new HashMap<>();
-		pocetStudentu=pocetPrvku;//prvkyDatabaze=new Student[pocetPrvku];
+		//pocetStudentu=pocetPrvku;
+		//prvkyDatabaze=new Student[pocetPrvku];
 		sc=new Scanner(System.in);
 	}
 	
@@ -32,17 +37,16 @@ public class Databaze{
 	
 	public void deleteStudent(String key) {
 		prvkyDatabaze.remove(key);
+		//pocetStudentu=prvkyDatabaze.size();
 	}
 	
 	public void setStudent()
-	{
-		for(int i = 0;i<pocetStudentu;i++) {
-			System.out.println("Zadejte jmeno studenta, rok narozeni");
-			String jmeno=sc.next();
-			int rok=sc.nextInt();
-			prvkyDatabaze.put(jmeno, new Student(jmeno, rok));
-			//prvkyDatabaze[posledniStudent++]=new Student(jmeno,rok);
-		}
+	{	
+		System.out.println("Zadejte jmeno studenta, rok narozeni");
+		String jmeno=sc.next();
+		int rok=sc.nextInt();
+		
+		prvkyDatabaze.put(jmeno, new Student(jmeno, rok));
 		Set<String>keys = prvkyDatabaze.keySet();
 		this.keys = keys;
 	}
@@ -62,19 +66,11 @@ public class Databaze{
 		return prvkyDatabaze.containsKey(key);
 	}
 	
-	public Student[] getPrvkyDatabaze() {
-		return (Student[]) prvkyDatabaze.values().toArray();
+	public Map <String, Student> getPrvkyDatabaze() {
+		return prvkyDatabaze;
 	}
-	
-	private Scanner sc;
-	Map <String, Student> prvkyDatabaze;
-	Set<String> keys;
-	//private Student [] prvkyDatabaze;
-	private int pocetStudentu=0;
-	//private int posledniStudent;
-	
 
-	public boolean safeToFile(String fileName, Student[] students) throws InvalidPrumer{
+	public boolean safeToFile(String fileName, Map<String, Student> students) throws InvalidPrumer{
 		//initialize writers
 		FileWriter fw = null; BufferedWriter out = null;
 		//begin writing
@@ -82,12 +78,12 @@ public class Databaze{
 			fw = new FileWriter(fileName);
 			out = new BufferedWriter(fw);
 			//
-			for(Student student : students) {
+			for(Student student : students.values()) {
 				out.write(student.getJmeno()  +","
 						+ student.getRocnik() +","
 						+ student.getStudijniPrumer());
 				out.newLine();
-			 }
+			}
 		}
 		catch(IOException e){
 			System.err.println(e.getMessage());
@@ -121,11 +117,9 @@ public class Databaze{
 				String[] splits = line.split(splitter);
 				//assign values to database variables
 				if(splits.length==3) {
-					//System.out.println("1. "+splits[0]+" 2. "+splits[1]+" 3. "+splits[2]);
 					Student a = new Student(splits[0], Integer.parseInt(splits[1]));
 					a.setStudijniPrumer(Float.parseFloat(splits[2]));			
 					out.add(a);
-					//
 				}
 			}
 		}
@@ -146,7 +140,6 @@ public class Databaze{
 			prvkyDatabaze.put(out.get(i).getJmeno(), out.get(i));	
 		}
 		keys = prvkyDatabaze.keySet();
-		//prvkyDatabaze = out.toArray(new Student.out.size(]);
 	}
 }
 	
