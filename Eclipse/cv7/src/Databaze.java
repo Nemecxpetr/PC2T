@@ -5,7 +5,6 @@ public class Databaze{
 	//variables:
 	private Scanner sc;
 	Map <String, Student> prvkyDatabaze;
-	Set<String> keys;
 	
 	public Databaze(int pocetPrvku)
 	{
@@ -18,7 +17,7 @@ public class Databaze{
 	public void printDatabaze() throws InvalidPrumer {
 		//PrintStream printStream = new PrintStream(null);
 		System.out.println();
-		for(String key:keys) {
+		for(String key:prvkyDatabaze.keySet()) {//change keys to prvkyDatabaze.keySet()
 			System.out.println("Jmeno: " + prvkyDatabaze.get(key).getJmeno()
 					+ ", rok narozeni: " + prvkyDatabaze.get(key).getRocnik() 
 					+ ", studijni prumer: " + prvkyDatabaze.get(key).getStudijniPrumer());
@@ -29,15 +28,19 @@ public class Databaze{
 		System.out.println();
 		System.out.println("Jmena vsech studentu: \n");
 		int i=1;
-		for(String key:keys) {
+		for(String key:prvkyDatabaze.keySet()) {
 			System.out.println(i+". "+prvkyDatabaze.get(key).getJmeno());
 			i++;
 		}
+		
 	}
 	
-	public void deleteStudent(String key) {
-		prvkyDatabaze.remove(key);
-		//pocetStudentu=prvkyDatabaze.size();
+	public boolean deleteStudent(String key) {
+		prvkyDatabaze.remove(key);//add null check
+		if(prvkyDatabaze.containsKey(key)) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void setStudent()
@@ -45,10 +48,7 @@ public class Databaze{
 		System.out.println("Zadejte jmeno studenta, rok narozeni");
 		String jmeno=sc.next();
 		int rok=sc.nextInt();
-		
 		prvkyDatabaze.put(jmeno, new Student(jmeno, rok));
-		Set<String>keys = prvkyDatabaze.keySet();
-		this.keys = keys;
 	}
 	
 	public Student getStudent(String key)
@@ -139,7 +139,6 @@ public class Databaze{
 		for (int i = 0; i < out.size(); i++) {			 
 			prvkyDatabaze.put(out.get(i).getJmeno(), out.get(i));	
 		}
-		keys = prvkyDatabaze.keySet();
 	}
 }
 	

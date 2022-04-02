@@ -41,16 +41,14 @@ public class Test {
 		{
 			System.out.println();
 			System.out.println("Vyberte pozadovanou cinnost:");
-			System.out.println("1 .. vytvoreni nove databaze");
-			System.out.println("2 .. vlozeni noveho studenta");
-			System.out.println("3 .. nastaveni prumeru studenta");
-			System.out.println("4 .. vypis informace o studentovi");
-			System.out.println("5 .. vypis jmen studentu");
-			System.out.println("6 .. vypis databazi");
-			System.out.println("7 .. ulozeni databaze");
-			System.out.println("8 .. otevreni ulozene databaze");
-			System.out.println("9 .. vymaz zvoleneho studenta");
-			System.out.println("10 .. ukonceni aplikace");
+			System.out.println("1 .. VYTVORENI nove databaze");
+			System.out.println("2 .. VLOZENI noveho studenta");
+			System.out.println("3 .. NASTAVENI prumeru studenta");
+			System.out.println("4 .. VYPIS");			
+			System.out.println("5 .. ULOZENI databaze");
+			System.out.println("6 .. OTEVRENI ulozene databaze");
+			System.out.println("7 .. SMAZANI zvoleneho studenta");
+			System.out.println("0 .. UKONCENI aplikace");
 
 			
 			volba=pouzePrirozenaCisla(sc);
@@ -106,41 +104,52 @@ public class Test {
 						sc.nextLine();
 					}					
 					break;
-				case 4://Print indexed student info
-					try {
-					System.out.println("Zadejte jmeno studenta");
-					name=sc.next();
-					Student info=mojeDatabaze.getStudent(name);
-					System.out.println("Jmeno: " + info.getJmeno()
-									+ ", rok narozeni: " + info.getRocnik() 
-									+ ", prumer: " + info.getStudijniPrumer());
-					//pressEnterToContinue();
+				case 4://Print
+					System.out.println();
+					System.out.println("VYPIS:");
+					System.out.println("1 .. informace o studentovi");
+					System.out.println("2 .. jmena vsech studentu");
+					System.out.println("3 .. cely obsah databaze");
+					volba=pouzePrirozenaCisla(sc);
+					switch(volba) {
+						case 1://Print student info
+						try {
+							System.out.println("Zadejte jmeno studenta");
+							name=sc.next();
+							Student info=mojeDatabaze.getStudent(name);
+							System.out.println("Jmeno: " + info.getJmeno()
+											+ ", rok narozeni: " + info.getRocnik() 
+											+ ", prumer: " + info.getStudijniPrumer());
+							//pressEnterToContinue();
+							}
+							catch(InputMismatchException e){
+								System.err.println("Nastala vyjimka typu "+e.toString());
+								System.err.println("Overte, zda jste zadali cislo!\n");
+								//pressEnterToContinue();
+								sc.nextLine();
+							}
+							catch(NullPointerException e) {
+								System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
+								System.err.println("Student na ktereho se snazite podivat zatim neexistuje, musite jej nejprve vytvorit");
+								//pressEnterToContinue();
+								sc.nextLine();
+							}
+							catch(ArrayIndexOutOfBoundsException e) {
+								System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
+								//pressEnterToContinue();
+								sc.nextLine();
+							}					
+							break;
+						case 2://Print names of all students
+							mojeDatabaze.printAllNames();
+							break;
+						case 3://Print whole database
+							mojeDatabaze.printDatabaze();
+							break;
+			
 					}
-					catch(InputMismatchException e){
-						System.err.println("Nastala vyjimka typu "+e.toString());
-						System.err.println("Overte, zda jste zadali cislo!\n");
-						//pressEnterToContinue();
-						sc.nextLine();
-					}
-					catch(NullPointerException e) {
-						System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
-						System.err.println("Student na ktereho se snazite podivat zatim neexistuje, musite jej nejprve vytvorit");
-						//pressEnterToContinue();
-						sc.nextLine();
-					}
-					catch(ArrayIndexOutOfBoundsException e) {
-						System.err.println("Nastala vyjimka typu "+e.toString()+"\n");
-						//pressEnterToContinue();
-						sc.nextLine();
-					}					
 					break;
-				case 5:
-					mojeDatabaze.printAllNames();
-					break;
-				case 6://Print whole database
-					mojeDatabaze.printDatabaze();
-					break;
-				case 7://Safe database to file with given name !!! format must be ex. "Student.txt"
+				case 5://Safe database to file with given name !!! format must be ex. "Student.txt"
 					while(true) {
 						System.out.println("Zadejte nazev souboru do ktereho se databaze ulozi:");
 						String fileName=sc.next();
@@ -148,18 +157,23 @@ public class Test {
 							break;
 						}
 					}
-					break;//ERR
-				case 8://Read database from file
+					break;
+				case 6://Read database from file
 					System.out.println("Zadejte nazev souboru, ktery chcete nacist:");
 					String fileName=sc.next();
 					mojeDatabaze.readFromFile(fileName);
 					break;
-				case 9: 
+				case 7: 
 					System.out.println("Zadejte nazev studenta, ktereho chcete vymazat z databaze:");
 					name=sc.next();
-					mojeDatabaze.deleteStudent(name);
+					if(mojeDatabaze.deleteStudent(name))
+					{
+						System.out.println();
+						System.err.println("Zadaný klíè nebyl v databázi.");
+						System.out.println("Žádný student nebyl smazán");
+					}
 					break;
-				case 10://exit program
+				case 0://exit program
 					run=false;
 					break;
 			}
