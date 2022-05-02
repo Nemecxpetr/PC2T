@@ -1,0 +1,27 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS `user_has_role` (
+	`user_id_user`	INTEGER,
+	`role_id_role`	INTEGER,
+	FOREIGN KEY(`role_id_role`) REFERENCES `role`(`id_role`),
+	FOREIGN KEY(`user_id_user`) REFERENCES `user`(`id_user`)
+);
+INSERT INTO `user_has_role` VALUES (1,1);
+INSERT INTO `user_has_role` VALUES (2,1);
+INSERT INTO `user_has_role` VALUES (3,2);
+CREATE TABLE IF NOT EXISTS `studenti` (
+	`id_user`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`name`	TEXT NOT NULL,
+	`surname`	TEXT NOT NULL,
+	`birthday`	TEXT NOT NULL,
+	`age`	INTEGER,
+	`salary`	INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS `obor` (
+	`id_obor`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`name`	INTEGER NOT NULL UNIQUE
+);
+INSERT INTO `obor` VALUES (1,'TECHNIC');
+INSERT INTO `obor` VALUES (2,'ADMIN');
+INSERT INTO `obor` VALUES (3,'MANAGER');
+COMMIT;
